@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <variable
+            name="result"
+            type="com.android.movie.database.DatabaseMovie" />
+
+        <variable
+            name="clickListener"
+            type="com.android.movie.view.popularMovies.MovieClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:onClick="@{() -> clickListener.onClick(result)}">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/poster"
+                tools:src="@tools:sample/backgrounds/scenic"
+                app:image="@{result}"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Rambo"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:title="@{result}"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:background="@color/black_trans"
+                android:layout_alignParentBottom="true"
+                android:padding="16dp"/>
+
+
+            <com.like.LikeButton
+                app:icon_type="star"
+                app:icon_size="24dp"
+                android:id="@+id/star_button"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="4dp"
+                app:isFilled="@{result}"
+                app:circle_start_color="@color/white"
+                app:circle_end_color="@color/colorAccent"
+                app:dots_primary_color="@color/colorAccent"
+                app:dots_secondary_color="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

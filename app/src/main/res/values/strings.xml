@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Movie</string>
+    <string name="discover">Discover</string>
+    <string name="poster">Poster</string>
+    <string name="search">Search</string>
+    <string name="back_button">Back button</string>
+    <string name="favorite">Favorite</string>
+    <string name="rate_movie">Rate Movie</string>
+    <string name="tweet">tweet</string>
+    <string name="movie_dropdown">Movie dropdown</string>
+    <string name="search_for_movies">Search for movies</string>
+    <string name="released">Released: </string>
+</resources>

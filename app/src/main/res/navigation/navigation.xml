@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/home_fragment">
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.android.movie.view.home.HomeFragment"
+        android:label="Home fragment"
+        tools:layout="@layout/fragment_home_layout">
+
+        <action
+            android:id="@+id/action_home_fragment_to_movie_detail_fragment"
+            app:destination="@id/movie_detail_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/popular_fragment"
+        android:name="com.android.movie.view.popularMovies.TopRatedMovieFragment"
+        android:label="Filter list fragment"
+        tools:layout="@layout/fragment_popular_movie">
+
+
+        <action
+            android:id="@+id/action_popular_fragment_to_movie_detail_fragment"
+            app:destination="@id/movie_detail_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favorite_fragment"
+        android:name="com.android.movie.view.favoriteMovies.FavoriteMovieFragment"
+        android:label="Favorite list fragment"
+        tools:layout="@layout/fragment_favorite_layout">
+
+
+        <action
+            android:id="@+id/action_favorite_fragment_to_movie_detail_fragment"
+            app:destination="@id/movie_detail_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movie_detail_fragment"
+        android:name="com.android.movie.view.movieDetails.MovieDetailsFragment"
+        android:label="Movie detail fragment"
+        tools:layout="@layout/fragment_movie_detail">
+        <argument
+            android:name="movie"
+            app:argType="com.android.movie.database.DatabaseMovie" />
+
+    </fragment>
+
+</navigation>
