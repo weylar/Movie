@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.android.movie.R
 import com.android.movie.database.DatabaseMovie
 import com.android.movie.databinding.FragmentMovieDetailBinding
+import com.android.movie.databinding.FragmentMovieDetailBindingImpl
 import com.android.movie.util.Utility.IMAGE_URL
 import com.android.movie.viewModel.ViewModelProviderFactory
 import com.like.LikeButton
