@@ -4,31 +4,31 @@ package com.android.movie.repository
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.android.movie.database.DatabaseMovie
-import com.android.movie.network.Movie
 import com.android.movie.network.asDatabaseModel
 import com.android.movie.source.MovieLocalDataSource
 import com.android.movie.source.MovieRemoteDataSource
 import com.android.movie.util.Utility.PAGES
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Named
 
 
-class MovieRepository(val application: Application) {
+class MovieRepository @Inject constructor(
+    private val movieLocalSource: MovieLocalDataSource,
+    private val movieRemoteSource: MovieRemoteDataSource){
 
-    private val movieLocalSource = MovieLocalDataSource(application)
 
-     suspend fun getMovies(): LiveData<List<DatabaseMovie>>? {
+    suspend fun getMovies(): LiveData<List<DatabaseMovie>>? {
         return movieLocalSource.getLocalMovies()
-
-
     }
 
     suspend fun refreshMovies() {
+        Timber.i("Refresh was called")
         withContext(IO) {
             for (page in 1..PAGES) {
-                val movies = MovieRemoteDataSource.getRemoteMovies(page)
+                val movies = movieRemoteSource.getRemoteMovies(page)
                 movies?.let {
                     movieLocalSource.saveLocalMovies(*movies.asDatabaseModel())
                 }
@@ -45,7 +45,7 @@ class MovieRepository(val application: Application) {
     }
 
     suspend fun setFavoriteMovie(id: Long) {
-         withContext(IO) {
+        withContext(IO) {
             movieLocalSource.setLocalFavorite(id)
         }
 

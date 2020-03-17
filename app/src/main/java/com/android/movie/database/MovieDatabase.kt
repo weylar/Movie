@@ -8,7 +8,7 @@ import com.android.movie.database.MovieDatabaseDao
 import com.android.movie.model.Result
 
 
-@Database(entities = [DatabaseMovie::class], version = 8, exportSchema = false)
+@Database(entities = [DatabaseMovie::class], version = 10, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
 
 

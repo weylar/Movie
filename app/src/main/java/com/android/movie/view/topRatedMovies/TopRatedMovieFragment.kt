@@ -18,17 +18,22 @@ import com.android.movie.view.home.HomeFragmentDirections
 import com.android.movie.view.popularMovies.MovieClickListener
 import com.android.movie.view.popularMovies.PopularMovieAdapter
 import com.android.movie.view.popularMovies.PopularMovieViewModel
-import com.android.movie.view.popularMovies.PopularMovieViewModelFactory
+import com.android.movie.viewModel.ViewModelProviderFactory
+import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class TopRatedMovieFragment : Fragment() {
+class TopRatedMovieFragment : DaggerFragment() {
 
     private lateinit var viewModel: PopularMovieViewModel
     private lateinit var adapter: PopularMovieAdapter
     private lateinit var  binding: FragmentPopularMovieBinding
+
+    @Inject
+    lateinit var factory: ViewModelProviderFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,8 +44,6 @@ class TopRatedMovieFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_popular_movie, container, false
         )
-        val application = requireNotNull(this.activity).application
-        val factory = PopularMovieViewModelFactory(MovieRepository(application))
 
         viewModel = ViewModelProvider(this, factory)
             .get(PopularMovieViewModel::class.java)
@@ -55,8 +58,6 @@ class TopRatedMovieFragment : Fragment() {
         )
         adapter = PopularMovieAdapter(click, viewModel)
         binding.recyclerPopularMovies.adapter = adapter
-        val layoutManager = LinearLayoutManager(context)
-        binding.recyclerPopularMovies.layoutManager = layoutManager
         getMovies()
         return binding.root
     }

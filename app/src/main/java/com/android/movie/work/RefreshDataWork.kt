@@ -6,29 +6,43 @@ package com.android.movie.work
 import android.app.Application
 import android.content.Context
 import androidx.work.CoroutineWorker
+import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.android.movie.repository.MovieRepository
+import com.android.movie.source.MovieLocalDataSource
 import retrofit2.HttpException
 import timber.log.Timber
+import javax.inject.Inject
 
-class RefreshDataWorker(
+class RefreshDataWorker @Inject constructor(
     appContext: Context,
-    params: WorkerParameters
+    params: WorkerParameters,
+    val repository: MovieRepository
 ) :
     CoroutineWorker(appContext, params) {
 
-    companion object {
-        const val WORK_NAME = "RefreshDataWorker"
-    }
+
 
 
     override suspend fun doWork(): Result {
-        val repository = MovieRepository(applicationContext as Application)
         return try {
             repository.refreshMovies()
             Result.success()
         } catch (e: HttpException) {
             Result.failure()
+        }
+    }
+
+    companion object {
+        const val WORKER_NAME = "RefreshDataWork"
+    }
+
+    class Factory @Inject constructor(
+        val repository: MovieRepository
+        ): ChildWorkerFactory {
+
+        override fun create(appContext: Context, params: WorkerParameters): CoroutineWorker {
+            return RefreshDataWorker(appContext, params, repository)
         }
     }
 }

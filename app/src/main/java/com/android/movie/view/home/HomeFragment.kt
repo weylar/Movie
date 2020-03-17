@@ -18,22 +18,28 @@ import com.android.movie.R
 import com.android.movie.database.DatabaseMovie
 import com.android.movie.databinding.FragmentHomeLayoutBinding
 import com.android.movie.repository.MovieRepository
+import com.android.movie.viewModel.ViewModelProviderFactory
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 const val POPULAR = "Popular"
 const val TOP_RATED = "Top Rated"
 const val FAVORITE = "Favorites"
 
-class HomeFragment : Fragment() {
+class HomeFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentHomeLayoutBinding
     private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
 
-    private lateinit var homeFragmentViewModel: HomeFragmentViewModel
+    private lateinit var homeViewModel: HomeViewModel
+
+    @Inject
+    lateinit var factory: ViewModelProviderFactory
 
 
     override fun onCreateView(
@@ -41,16 +47,14 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_home_layout, container, false
         )
 
-        val application = requireNotNull(this.activity).application
-        val factory = HomeFragmentViewModelFactory(MovieRepository(application))
-        homeFragmentViewModel =
-            ViewModelProvider(this, factory).get(HomeFragmentViewModel::class.java)
+
+        homeViewModel =
+            ViewModelProvider(this, factory)
+                .get(HomeViewModel::class.java)
         val tabLayout = binding.tabLayout
         homeViewPagerAdapter = HomeViewPagerAdapter(this)
         binding.pager.adapter = homeViewPagerAdapter
@@ -63,11 +67,11 @@ class HomeFragment : Fragment() {
             }
 
         }.attach()
-        binding.homeFragmentViewModel = homeFragmentViewModel
+        binding.homeFragmentViewModel = homeViewModel
         binding.lifecycleOwner = this
         getMovies()
         CoroutineScope(Dispatchers.Main).launch {
-            homeFragmentViewModel.getMovie()?.observe(viewLifecycleOwner,
+            homeViewModel.getMovie()?.observe(viewLifecycleOwner,
                 Observer {
                     searchClick(it)
 
@@ -112,7 +116,7 @@ class HomeFragment : Fragment() {
 
     private fun getMovies() {
         CoroutineScope(Dispatchers.Main).launch {
-            homeFragmentViewModel.getMovie()?.observe(viewLifecycleOwner,
+            homeViewModel.getMovie()?.observe(viewLifecycleOwner,
                 Observer {
                     val adapter = ArrayAdapter(
                         context!!,

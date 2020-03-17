@@ -5,6 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.android.movie.view.favoriteMovies.FavoriteMovieFragment
 import com.android.movie.view.popularMovies.PopularMovieFragment
 import com.android.movie.view.topRatedMovies.TopRatedMovieFragment
+import javax.inject.Inject
 
 
 class HomeViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {

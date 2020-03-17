@@ -5,16 +5,21 @@ import androidx.lifecycle.LiveData
 import com.android.movie.database.DatabaseMovie
 import com.android.movie.model.Trailers
 import com.android.movie.network.Movie
-import com.android.movie.network.RetrofitProvider
+import com.android.movie.network.MovieApi
 import timber.log.Timber
+import javax.inject.Inject
 
 
-object MovieRemoteDataSource : MoviesDataSource {
+class MovieRemoteDataSource @Inject constructor(
+    var movieApi:
+    MovieApi
+) :
+    MoviesDataSource {
 
 
     override suspend fun getRemoteMovies(page: Int): Movie? {
         try {
-            return RetrofitProvider.provideMovieApi().getMoviesAsync(page = page)
+            return movieApi.getMoviesAsync(page = page)
         } catch (t: Throwable) {
             Timber.i(t.fillInStackTrace())
         }
@@ -24,7 +29,7 @@ object MovieRemoteDataSource : MoviesDataSource {
 
     override suspend fun getMovieTrailer(id: Long): Trailers? {
         try {
-            return RetrofitProvider.provideMovieApi().getMoviesTrailerAsync(id)
+            return movieApi.getMoviesTrailerAsync(id)
         } catch (t: Throwable) {
             Timber.i(t.fillInStackTrace())
         }

@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     /*Retrofit components dependency*/
-    implementation 'com.squareup.retrofit2:retrofit:2.7.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
 
     //Kotlin serialization dependency
@@ -76,11 +76,11 @@ dependencies {
 
     //Viewpager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
-    implementation "com.google.android.material:material:1.2.0-alpha04"
+    implementation "com.google.android.material:material:1.2.0-alpha05"
 
     // Room and Lifecycle dependencies
-    implementation "androidx.room:room-runtime:2.2.3"
-    kapt "androidx.room:room-compiler:2.2.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
 

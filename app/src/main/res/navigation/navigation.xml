@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/popular_fragment"
-        android:name="com.android.movie.view.popularMovies.TopRatedMovieFragment"
+        android:name="com.android.movie.view.topRatedMovies.TopRatedMovieFragment"
         android:label="Filter list fragment"
         tools:layout="@layout/fragment_popular_movie">
 

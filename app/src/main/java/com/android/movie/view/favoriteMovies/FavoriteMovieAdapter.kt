@@ -8,13 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.movie.database.DatabaseMovie
 import com.android.movie.databinding.FavoriteMovieListItemBinding
-import com.android.movie.model.Result
 import com.like.LikeButton
 import com.like.OnLikeListener
 
 
 class FavoriteMovieAdapter(private val clickListener: MovieClickListener,
-                           private val viewModel: FavoriteMovieFragmentViewModel) :
+                           private val viewModel: FavoriteMovieViewModel) :
     ListAdapter<DataItem, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
 
@@ -43,7 +42,7 @@ class FavoriteMovieAdapter(private val clickListener: MovieClickListener,
     class ViewHolder private constructor(private val binding: FavoriteMovieListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: FavoriteMovieFragmentViewModel,
+        fun bind(viewModel: FavoriteMovieViewModel,
                  clickListener: MovieClickListener, item: DatabaseMovie) {
             binding.result = item
             binding.starButton.setOnLikeListener(object : OnLikeListener {

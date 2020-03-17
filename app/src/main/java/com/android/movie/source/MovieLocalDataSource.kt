@@ -1,27 +1,26 @@
 package com.android.movie.source
 
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import com.android.movie.database.DatabaseMovie
-import com.android.movie.database.MovieDatabase
 import com.android.movie.database.MovieDatabaseDao
 import com.android.movie.model.Trailers
 import com.android.movie.network.Movie
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
-class MovieLocalDataSource(val application: Application) : MoviesDataSource {
+class MovieLocalDataSource
+@Inject constructor(var database: MovieDatabaseDao) : MoviesDataSource {
 
-    private var database: MovieDatabaseDao = MovieDatabase.getInstance(application).movieDatabaseDao
 
     override suspend fun getRemoteMovies(page: Int): Movie? {
         return null
     }
 
     override suspend fun getMovieTrailer(id: Long): Trailers? {
-        return  null
+        return null
     }
 
     override suspend fun getLocalMovies(): LiveData<List<DatabaseMovie>>? {

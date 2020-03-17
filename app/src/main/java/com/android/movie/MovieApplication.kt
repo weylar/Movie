@@ -1,20 +1,28 @@
 package com.android.movie
 
-import android.app.Application
-import android.os.Build
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
+import com.android.movie.dagger.DaggerAppComponent
+import com.android.movie.work.MyWorkerFactory
 import com.android.movie.work.RefreshDataWorker
+import com.android.movie.work.RefreshDataWorker.Companion.WORKER_NAME
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
-class MovieApplication : Application() {
+class MovieApplication : DaggerApplication() {
+
+    @Inject
+    lateinit var myWorkerFactory: MyWorkerFactory
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication>? {
+        return DaggerAppComponent.builder().application(this).build()
+    }
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
@@ -30,19 +38,31 @@ class MovieApplication : Application() {
             .setRequiresBatteryNotLow(true)
             .setRequiresCharging(false)
             .build()
-
-
         val repeatingRequest = PeriodicWorkRequest
             .Builder(RefreshDataWorker::class.java, 1, TimeUnit.DAYS)
             .setConstraints(constraints)
             .build()
 
-        WorkManager.getInstance(this).enqueue(repeatingRequest)
+
+        WorkManager.initialize(
+            this,
+            Configuration.Builder()
+                .setWorkerFactory(myWorkerFactory)
+                .build()
+        )
+
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            WORKER_NAME,
+            ExistingPeriodicWorkPolicy.REPLACE,
+            repeatingRequest)
     }
 
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
         delayedInit()
 
 

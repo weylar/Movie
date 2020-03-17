@@ -12,22 +12,25 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieDetailFragmentViewModel(private val movies: DatabaseMovie,
-                                   private val app: Application) : ViewModel() {
+class MovieDetailFragmentViewModel
+    @Inject constructor(
+        private var movieRepository: MovieRepository) : ViewModel() {
+
+
 
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    private val movieRepository = MovieRepository(app)
-    private val _movie: MutableLiveData<DatabaseMovie> by lazy {
-        getMovie()
-    }
+//    private val _movie: MutableLiveData<DatabaseMovie> by lazy {
+//       // getMovie()
+//    }
+//
+//    val movie:  LiveData<DatabaseMovie>
+//        get() = _movie
 
-    val movie:  LiveData<DatabaseMovie>
-        get() = _movie
 
-
-    private fun getMovie(): MutableLiveData<DatabaseMovie>{
+     fun getMovie(movies: DatabaseMovie): MutableLiveData<DatabaseMovie>{
         val movie = MutableLiveData<DatabaseMovie>()
         movie.value = movies
         return movie
