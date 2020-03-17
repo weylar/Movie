@@ -5,7 +5,7 @@ buildscript {
     ext.version_navigation = '1.0.0'
     ext.dagger_version = '2.26'
     ext.room_version = '2.2.4'
-    ext.work_version = "2.3.2"
+    ext.work_version = "2.3.3"
     ext.paging_version = "1.0.0"
     repositories {
         google()

@@ -21,7 +21,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -97,7 +97,6 @@ dependencies {
     //adding paging
     implementation "android.arch.paging:runtime:$paging_version"
 
-    compile files('libs/YouTubeAndroidPlayerApi.jar')
 
 
 
