@@ -1,3 +1,4 @@
+
 version: 2
 jobs:
   build:
@@ -28,3 +29,4 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
+  view rawconfig.yml hosted with ❤ by GitHub
