@@ -42,8 +42,7 @@ class PopularMovieFragment : DaggerFragment() {
             inflater, R.layout.fragment_popular_movie, container, false
         )
 
-        viewModel = ViewModelProvider(this, factory)
-            .get(PopularMovieViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(PopularMovieViewModel::class.java)
 
         val click = MovieClickListener(
             fun(result: DatabaseMovie) {

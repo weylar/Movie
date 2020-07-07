@@ -8,6 +8,7 @@ import com.android.movie.model.Trailers
 import com.android.movie.network.Movie
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 

@@ -6,7 +6,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class MyWorkerFactory @Inject constructor(
-    val workerFactories: Map<Class<out CoroutineWorker>,
+        private val workerFactories: Map<Class<out CoroutineWorker>,
             @JvmSuppressWildcards Provider<ChildWorkerFactory>>
 ) : WorkerFactory() {
 

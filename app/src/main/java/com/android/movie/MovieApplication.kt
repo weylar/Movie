@@ -36,21 +36,15 @@ class MovieApplication : DaggerApplication() {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .setRequiresBatteryNotLow(true)
-            .setRequiresCharging(false)
             .build()
         val repeatingRequest = PeriodicWorkRequest
             .Builder(RefreshDataWorker::class.java, 1, TimeUnit.DAYS)
             .setConstraints(constraints)
             .build()
 
-
-        WorkManager.initialize(
-            this,
-            Configuration.Builder()
+        WorkManager.initialize(this, Configuration.Builder()
                 .setWorkerFactory(myWorkerFactory)
-                .build()
-        )
-
+                .build())
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             WORKER_NAME,

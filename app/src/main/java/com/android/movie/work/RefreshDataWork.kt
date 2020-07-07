@@ -21,11 +21,10 @@ class RefreshDataWorker @Inject constructor(
 ) :
     CoroutineWorker(appContext, params) {
 
-
-
-
     override suspend fun doWork(): Result {
+        Timber.i("I'm happening")
         return try {
+
             repository.refreshMovies()
             Result.success()
         } catch (e: HttpException) {

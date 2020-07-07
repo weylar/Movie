@@ -23,6 +23,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -66,8 +67,9 @@ class TopRatedMovieFragment : DaggerFragment() {
         CoroutineScope(Main).launch {
             viewModel.getMovie()?.observe(viewLifecycleOwner, Observer {
                 val sorted = it.sortedByDescending { movie -> movie.voteAverage }
+                Timber.i(sorted.size.toString())
                 adapter.submitListOnCall(sorted)
-                binding.loading.visibility = View.GONE
+               // binding.loading.visibility = View.GONE
             })
         }
     }
