@@ -16,7 +16,9 @@ class MyWorkerFactory @Inject constructor(
         workerParameters: WorkerParameters
     ): ListenableWorker? {
         val foundEntry =
-            workerFactories.entries.find { Class.forName(workerClassName).isAssignableFrom(it.key) }
+            workerFactories.entries.find {
+                Class.forName(RefreshDataWorker::class.java.name).isAssignableFrom(it.key)
+            }
         val factoryProvider = foundEntry?.value
             ?: throw IllegalArgumentException("unknown worker class name: $workerClassName")
         return factoryProvider.get().create(appContext, workerParameters)
