@@ -43,23 +43,21 @@ class MovieApplication : DaggerApplication() {
             .setConstraints(constraints)
             .build()
 
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            WORKER_NAME,
+            ExistingPeriodicWorkPolicy.REPLACE,
+            repeatingRequest
+        )
+    }
 
+    override fun onCreate() {
+        super.onCreate()
         WorkManager.initialize(
             this,
             Configuration.Builder()
                 .setWorkerFactory(myWorkerFactory)
                 .build()
         )
-
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            WORKER_NAME,
-            ExistingPeriodicWorkPolicy.REPLACE,
-            repeatingRequest)
-    }
-
-    override fun onCreate() {
-        super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
